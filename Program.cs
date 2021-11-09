@@ -63,49 +63,50 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
                 while (charactersOrderByInitiative[i].currentAttackNumber > 0)
                 {
                     //Choisi un adversaire aléatoirement dans le reste de la liste
-                    int idAdversaire = i;
-                    while (idAdversaire == i)
+                    int idDefender = i;
+                    while (idDefender == i)
                     {
-                        idAdversaire = random.Next(0, charactersOrderByInitiative.Count());
+                        idDefender = random.Next(0, charactersOrderByInitiative.Count());
                     }
-                    Console.WriteLine("\n"+((charactersOrderByInitiative[i].totalAttackNumber + 1) - charactersOrderByInitiative[i].currentAttackNumber) + "e attaque de " + charactersOrderByInitiative[i].name 
-                        +", "+ charactersOrderByInitiative[i].name + " attaque " + charactersOrderByInitiative[idAdversaire].name + " : ");
 
-                    //Calcul du jet d'attaque de l'attaquant
-                    int jetAttack = charactersOrderByInitiative[i].CalculJetAttack();
+                    //Initialisation des 2 joueurs d'une attaque
+                    Character attacker = charactersOrderByInitiative[i];
+                    Character defender = charactersOrderByInitiative[idDefender];
 
-                    //Calcul du jet de défense du défenseur
-                    int jetDefense = charactersOrderByInitiative[idAdversaire].CalculJetDefense();
+                    int numAttack = (attacker.totalAttackNumber + 1) - attacker.currentAttackNumber;
+                    Console.WriteLine("\n"+ numAttack + "e attaque de " + attacker.name + ", "+ attacker.name + " attaque " + defender.name + " : ");
 
-                    //Marge d'attaque
+                    //Calcul de la marge d'attaque
+                    int jetAttack = attacker.CalculJetAttack();
+                    int jetDefense = defender.CalculJetDefense();
                     int attackMargin = jetAttack - jetDefense;
 
                     //Si la marge d'attaque est positif
-                    Console.Write("DEBUG - Jet d'attaque de " + charactersOrderByInitiative[i].name + " = " + jetAttack + " et jet de défense de " + charactersOrderByInitiative[idAdversaire].name + " = " + jetDefense + "\n");
+                    Console.Write("DEBUG - Jet d'attaque de " + attacker.name + " = " + jetAttack + " et jet de défense de " + defender.name + " = " + jetDefense + "\n");
                     if (attackMargin > 0)
                     {
-                        int damageSuffered = attackMargin * charactersOrderByInitiative[i].damages / 100;
-                        charactersOrderByInitiative[idAdversaire].currentLife -= damageSuffered;
-                        Console.WriteLine("DEBUG - " + charactersOrderByInitiative[i].name + " inflige " + attackMargin + "*" + charactersOrderByInitiative[i].damages + "/100 , soit " + damageSuffered + " de dommage.");
-                        Console.Write(charactersOrderByInitiative[i].name + " réussi son attaque, " + charactersOrderByInitiative[idAdversaire].name + " perd " + damageSuffered + " point de vie.\n");
+                        int damageSuffered = attacker.Attack(defender, attackMargin);
+
+                        Console.WriteLine("DEBUG - " + attacker.name + " inflige " + attackMargin + "*" + attacker.damages + "/100 , soit " + damageSuffered + " de dommage.");
+                        Console.Write(attacker.name + " réussi son attaque, " + defender.name + " perd " + damageSuffered + " point de vie.\n");
                     }
                     else //Si négatif
                     {
-                        String response = charactersOrderByInitiative[i].name + " à raté son attaque. ";
-                        if (charactersOrderByInitiative[idAdversaire].currentAttackNumber > 0)
+                        String response = attacker.name + " à raté son attaque. ";
+                        if (defender.currentAttackNumber > 0)
                         {
-                            int counterAttack = charactersOrderByInitiative[idAdversaire].damages + random.Next(0, 100)+ (attackMargin * -1);
-                            Console.Write(response + charactersOrderByInitiative[i].name + " à raté son attaque. " + charactersOrderByInitiative[idAdversaire].name + " contre-attaque avec " + counterAttack + " de dégat.\n");
-                            charactersOrderByInitiative[idAdversaire].currentAttackNumber--;
+                            int damageSuffered = defender.CounterAttack(attacker, attackMargin);
+                            Console.Write(response + defender.name + " contre-attaque et " + attacker.name + " perd " + damageSuffered + " de point de vie.\n");
+                            defender.currentAttackNumber--;
                         }
                         else
                         {
-                            Console.Write(response + charactersOrderByInitiative[i].name + " à raté son attaque. " + charactersOrderByInitiative[idAdversaire].name + " n'a plus d'attaque disponible pour contre-attaquer.\n");
+                            Console.Write(response + defender.name + " n'a plus d'attaque disponible pour contre-attaquer.\n");
                         }
                     }
 
                     //incrément du nombre d'attaques restantes
-                    charactersOrderByInitiative[i].currentAttackNumber--;
+                    attacker.currentAttackNumber--;
                 }
             }
 
