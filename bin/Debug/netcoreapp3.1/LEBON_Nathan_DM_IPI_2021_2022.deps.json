@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "LEBON_Nathan_DM_IPI_2021_2022/1.0.0": {
+        "runtime": {
+          "LEBON_Nathan_DM_IPI_2021_2022.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LEBON_Nathan_DM_IPI_2021_2022/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
