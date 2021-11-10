@@ -10,11 +10,10 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
         static Random random = new Random();
         static void Main(string[] args)
         {
-            Duel();
+            Tournament();
         }
         
-        //Exercice 1 : Duel
-        private static void Duel()
+        private static void Tournament()
         {
             Model.Character character1 = new Model.Character("Hector", 75, 75, 75, 30, 200, 200, 2, 2);
             Model.Character character2 = new Model.Character("Simon", 75, 75, 75, 30, 200, 200, 2, 2);
@@ -30,20 +29,31 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
             while (playerWin == false)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.BackgroundColor = ConsoleColor.White;
+                Console.BackgroundColor = ConsoleColor.Gray;
                 Console.WriteLine("\n Round " + roundNumber + " :");
                 Console.ResetColor();
                 Console.ReadLine();
-                NewRound(characters);
+                Round(characters);
                 foreach (var character in characters)
                 {
                     if (character.currentLife <= 0){playerWin = true;}
                 }
                 roundNumber += 1;
             }
+
+            //Affichage gagnant 
+            Character winner = new Character();
+            foreach (var character in characters)
+            {
+                if (character.currentLife > 0) { winner = character; }
+            }
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("\nLe gagnant est " + winner.name);
+            Console.ResetColor();
         }
 
-        private static void NewRound(List<Model.Character> characters)
+        private static void Round(List<Model.Character> characters)
         {
             //Rétablissement des niveaux d'attaque par défaut
             characters.ForEach(c => c.currentAttackNumber = c.totalAttackNumber);
@@ -112,6 +122,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
 
             Console.WriteLine("\nBilan point de vie:");
             charactersOrderByInitiative.ForEach(c => Console.WriteLine(c.name+" : "+c.currentLife));
+
         }
 
         private static List<Character> CalculInitiative(List<Model.Character> characters)

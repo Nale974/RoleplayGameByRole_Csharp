@@ -6,7 +6,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 {
     class Character
     {
-        public String Type;
+        public String type;
         public String name;
         public int attack;
         public int defense;
@@ -53,7 +53,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         public int Attack(Character opponent, int attackMargin)
         {
-            int damageSuffered = attackMargin * opponent.damages / 100;
+            int damageSuffered = attackMargin * this.damages / 100;
             opponent.currentLife -= damageSuffered;
 
             return damageSuffered;
@@ -61,7 +61,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         public int CounterAttack(Character opponent, int attackMargin)
         {
-            int damageSuffered = opponent.damages + random.Next(0, 100) + (attackMargin * -1);
+            int damageSuffered = this.damages + random.Next(0, 100) + (attackMargin * -1);
             opponent.currentLife -= damageSuffered;
 
             return damageSuffered;
