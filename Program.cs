@@ -15,8 +15,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
         
         private static void Tournament()
         {
-            Model.Character character1 = new Model.Character("Hector", 75, 75, 75, 30, 200, 200, 2, 2);
-            Model.Character character2 = new Model.Character("Simon", 75, 75, 75, 30, 200, 200, 2, 2);
+            Model.Character character1 = new Model.Character("Hector", 75, 75, 400, 30, 200, 200, 5, 5);
+            Model.Character character2 = new Model.Character("Simon", 75, 75, 75, 30, 200, 200, 5, 5);
             List<Model.Character> characters = new List<Model.Character>() { character1,character2 };
 
             //Tant que la vie d'un des personnage est positif, on lance un nouveau round
@@ -102,17 +102,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
                     }
                     else //Si négatif
                     {
-                        String response = attacker.name + " à raté son attaque. ";
-                        if (defender.currentAttackNumber > 0)
-                        {
-                            int damageSuffered = defender.CounterAttack(attacker, attackMargin);
-                            Console.Write(response + defender.name + " contre-attaque et " + attacker.name + " perd " + damageSuffered + " de point de vie.\n");
-                            defender.currentAttackNumber--;
-                        }
-                        else
-                        {
-                            Console.Write(response + defender.name + " n'a plus d'attaque disponible pour contre-attaquer.\n");
-                        }
+                        Counter(defender,attacker,attackMargin);
                     }
 
                     //incrément du nombre d'attaques restantes
@@ -146,6 +136,45 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
                 .ToList();
 
             return charactersOrderByInitiative;
+        }
+
+        private static void Counter(Character counterAttacker, Character counterDefender, int bonus)
+        {
+            String response = counterDefender.name + " à raté son attaque. ";
+            
+            if (counterAttacker.currentAttackNumber > 0)
+            {
+                int numCounterAttack = (counterAttacker.totalAttackNumber + 1) - counterAttacker.currentAttackNumber;
+                Console.WriteLine("\n" + response + "Il reste " + counterAttacker.currentAttackNumber + " attaque à " + counterAttacker.name + ", " + counterAttacker.name + " contre attaque " + counterDefender.name + " : ");
+
+                //Calcul de la marge d'attaque
+                int counterJetAttack = counterAttacker.CalculJetAttack() +(-1 * bonus);
+                int counterJetDefense = counterDefender.CalculJetDefense();
+                int counterAttackMargin = counterJetAttack - counterJetDefense;
+
+                //Si la marge d'attaque est positif
+                Console.Write("DEBUG - Jet d'attaque de " + counterAttacker.name + " = " + counterJetAttack + " et jet de défense de " + counterDefender.name + " = " + counterJetDefense + "\n");
+                Console.WriteLine("Le bonus est de "+bonus);
+                if (counterAttackMargin > 0)
+                {
+                    int damageSuffered = counterAttacker.Attack(counterDefender, counterAttackMargin);
+
+                    Console.WriteLine("DEBUG - " + counterAttacker.name + " inflige " + counterAttackMargin + "*" + counterAttacker.damages + "/100 , soit " + damageSuffered + " de dommage.");
+                    Console.Write(counterAttacker.name + " réussi sa contre-attaque, " + counterDefender.name + " perd " + damageSuffered + " point de vie.\n");
+                }
+                else
+                {
+                    Counter(counterDefender, counterAttacker, counterAttackMargin);
+                    Console.WriteLine("ContreAttaque raté");
+                }
+                //int damageSuffered = defender.CounterAttack(attacker, attackMargin);
+                //Console.Write(response + defender.name + " contre-attaque et " + attacker.name + " perd " + damageSuffered + " de point de vie.\n");
+                counterAttacker.currentAttackNumber--;
+            }
+            else
+            {
+                Console.Write(response + counterAttacker.name + " n'a plus d'attaque disponible pour contre-attaquer.\n");
+            }
         }
     }
 }
