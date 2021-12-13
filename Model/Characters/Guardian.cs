@@ -1,15 +1,17 @@
-﻿using System;
+﻿using LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LEBON_Nathan_DM_IPI_2021_2022.Model.TypeOfCharacter
+namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Guardian : Character
+    class Guardian : Character, IPainSensitive
     {
-        public Guardian(string name)
+        int IPainSensitive.AttackCapability { get; set; } = -1;
+        public Guardian(String name) : base(name)
         {
             this.type = "Gardien";
-            this.name = name;
+            this.name = name + "[" + this.type + "]";
             this.attack = 50;
             this.defense = 150;
             this.initiative = 50;
@@ -18,6 +20,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.TypeOfCharacter
             this.currentLife = 150;
             this.currentAttackNumber = 3;
             this.totalAttackNumber = 3;
+            this.damageFeature = Enum.DamageFeature.Holy;
         }
+
     }
 }

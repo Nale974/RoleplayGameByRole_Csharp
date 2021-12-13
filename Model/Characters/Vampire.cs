@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LEBON_Nathan_DM_IPI_2021_2022.Model.TypeOfCharacter
+namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Liche : Character
+    class Vampire : Character
     {
-        public Liche(string name)
+        public Vampire(string name)
         {
-            this.type = "Goule";
-            this.name = name;
+            this.type = "Vampire";
+            this.name = name + "[" + this.type + "]";
             this.attack = 100;
             this.defense = 100;
             this.initiative = 120;
@@ -18,6 +18,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.TypeOfCharacter
             this.currentLife = 300;
             this.currentAttackNumber = 2;
             this.totalAttackNumber = 2;
+            this.characterFeature = Enum.CharacterFeature.Cursed;
         }
     }
 }

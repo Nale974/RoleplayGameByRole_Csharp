@@ -1,4 +1,5 @@
 ﻿using LEBON_Nathan_DM_IPI_2021_2022.Model;
+using LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,19 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
 {
     class Program
     {
-        static Random random = new Random();
+        public static Random random = new Random();
         static void Main(string[] args)
         {
-            Tournament();
+            //for (int i = 0; i < 10; i++)
+            //{
+                Tournament();
+            //}
         }
         
         private static void Tournament()
         {
-            Model.Character character1 = new Model.Character("Hector", 75, 75, 400, 30, 200, 200, 5, 5);
-            Model.Character character2 = new Model.Character("Simon", 75, 75, 75, 30, 200, 200, 5, 5);
+            Model.Character character1 = new Model.Characters.Guardian("Hector");
+            Model.Character character2 = new Model.Characters.Liche("Simon");
             List<Model.Character> characters = new List<Model.Character>() { character1,character2 };
 
             //Tant que la vie d'un des personnage est positif, on lance un nouveau round
@@ -26,27 +30,34 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
             Console.WriteLine("\nBilan point de vie:");
             characters.ForEach(c => Console.WriteLine(c.name + " : " + c.currentLife));
 
+            Character winner = new Character();
             while (playerWin == false)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.BackgroundColor = ConsoleColor.Gray;
-                Console.WriteLine("\n Round " + roundNumber + " :");
+                Console.WriteLine("\n Tour " + roundNumber + " :");
                 Console.ResetColor();
-                Console.ReadLine();
+                //Console.ReadLine();
+
                 Round(characters);
+
+                //Si il ne reste qu'un personnage en vie, il gagne
+                int counterLivingPlayers = 0;
                 foreach (var character in characters)
                 {
-                    if (character.currentLife <= 0){playerWin = true;}
+                    if (character.currentLife > 0) {
+                        winner = character;
+                        counterLivingPlayers ++; 
+                    }
                 }
+
+                if (counterLivingPlayers==1) {playerWin = true;}
+
+                //Sinon round suivant
                 roundNumber += 1;
             }
 
             //Affichage gagnant 
-            Character winner = new Character();
-            foreach (var character in characters)
-            {
-                if (character.currentLife > 0) { winner = character; }
-            }
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("\nLe gagnant est " + winner.name);
@@ -69,44 +80,39 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
             //Pour chaque personnage du round
             for (int i = 0; i < charactersOrderByInitiative.Count(); i++)
             {
-                //Jusqu'a que le personnage n'a plus d'attaque de disponible
-                while (charactersOrderByInitiative[i].currentAttackNumber > 0)
+                //Si le personnage est en vie
+                if (charactersOrderByInitiative[i].currentLife > 0)
                 {
-                    //Choisi un adversaire aléatoirement dans le reste de la liste
-                    int idDefender = i;
-                    while (idDefender == i)
+                    //Cas où le personnage est sensible et victime de la douleur
+                    if (charactersOrderByInitiative[i] is IPainSensitive characterPainSensitive && characterPainSensitive.AttackCapability >= 0)
                     {
-                        idDefender = random.Next(0, charactersOrderByInitiative.Count());
+                        Console.WriteLine(charactersOrderByInitiative[i].name + " est bloqué pendant encore " + (characterPainSensitive.AttackCapability + 1) + " tour(s).");
+                        characterPainSensitive.AttackCapability -= 1;
                     }
-
-                    //Initialisation des 2 joueurs d'une attaque
-                    Character attacker = charactersOrderByInitiative[i];
-                    Character defender = charactersOrderByInitiative[idDefender];
-
-                    int numAttack = (attacker.totalAttackNumber + 1) - attacker.currentAttackNumber;
-                    Console.WriteLine("\n"+ numAttack + "e attaque de " + attacker.name + ", "+ attacker.name + " attaque " + defender.name + " : ");
-
-                    //Calcul de la marge d'attaque
-                    int jetAttack = attacker.CalculJetAttack();
-                    int jetDefense = defender.CalculJetDefense();
-                    int attackMargin = jetAttack - jetDefense;
-
-                    //Si la marge d'attaque est positif
-                    Console.Write("DEBUG - Jet d'attaque de " + attacker.name + " = " + jetAttack + " et jet de défense de " + defender.name + " = " + jetDefense + "\n");
-                    if (attackMargin > 0)
+                    else
                     {
-                        int damageSuffered = attacker.Attack(defender, attackMargin);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nC'est au tour de "+ charactersOrderByInitiative[i].name+ ".");
+                        Console.ResetColor();
+                        //jusqu'a que le personnage n'a plus d'attaque de disponible
+                        while (charactersOrderByInitiative[i].currentAttackNumber > 0)
+                        {
+                            Console.Write("\n");
 
-                        Console.WriteLine("DEBUG - " + attacker.name + " inflige " + attackMargin + "*" + attacker.damages + "/100 , soit " + damageSuffered + " de dommage.");
-                        Console.Write(attacker.name + " réussi son attaque, " + defender.name + " perd " + damageSuffered + " point de vie.\n");
-                    }
-                    else //Si négatif
-                    {
-                        Counter(defender,attacker,attackMargin);
-                    }
+                            //Choisi un adversaire aléatoirement dans le reste de la liste
+                            int idDefender = i;
+                            while (idDefender == i)
+                            {
+                                idDefender = random.Next(0, charactersOrderByInitiative.Count());
+                            }
 
-                    //incrément du nombre d'attaques restantes
-                    attacker.currentAttackNumber--;
+                            //Initialisation des 2 joueurs d'une attaque
+                            Character attacker = charactersOrderByInitiative[i];
+                            Character defender = charactersOrderByInitiative[idDefender];
+
+                            attacker.Attack(defender);
+                        }
+                    }
                 }
             }
 
@@ -138,43 +144,5 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
             return charactersOrderByInitiative;
         }
 
-        private static void Counter(Character counterAttacker, Character counterDefender, int bonus)
-        {
-            String response = counterDefender.name + " à raté son attaque. ";
-            
-            if (counterAttacker.currentAttackNumber > 0)
-            {
-                int numCounterAttack = (counterAttacker.totalAttackNumber + 1) - counterAttacker.currentAttackNumber;
-                Console.WriteLine("\n" + response + "Il reste " + counterAttacker.currentAttackNumber + " attaque à " + counterAttacker.name + ", " + counterAttacker.name + " contre attaque " + counterDefender.name + " : ");
-
-                //Calcul de la marge d'attaque
-                int counterJetAttack = counterAttacker.CalculJetAttack() +(-1 * bonus);
-                int counterJetDefense = counterDefender.CalculJetDefense();
-                int counterAttackMargin = counterJetAttack - counterJetDefense;
-
-                //Si la marge d'attaque est positif
-                Console.Write("DEBUG - Jet d'attaque de " + counterAttacker.name + " = " + counterJetAttack + " et jet de défense de " + counterDefender.name + " = " + counterJetDefense + "\n");
-                Console.WriteLine("Le bonus est de "+bonus);
-                if (counterAttackMargin > 0)
-                {
-                    int damageSuffered = counterAttacker.Attack(counterDefender, counterAttackMargin);
-
-                    Console.WriteLine("DEBUG - " + counterAttacker.name + " inflige " + counterAttackMargin + "*" + counterAttacker.damages + "/100 , soit " + damageSuffered + " de dommage.");
-                    Console.Write(counterAttacker.name + " réussi sa contre-attaque, " + counterDefender.name + " perd " + damageSuffered + " point de vie.\n");
-                }
-                else
-                {
-                    Counter(counterDefender, counterAttacker, counterAttackMargin);
-                    Console.WriteLine("ContreAttaque raté");
-                }
-                //int damageSuffered = defender.CounterAttack(attacker, attackMargin);
-                //Console.Write(response + defender.name + " contre-attaque et " + attacker.name + " perd " + damageSuffered + " de point de vie.\n");
-                counterAttacker.currentAttackNumber--;
-            }
-            else
-            {
-                Console.Write(response + counterAttacker.name + " n'a plus d'attaque disponible pour contre-attaquer.\n");
-            }
-        }
     }
 }

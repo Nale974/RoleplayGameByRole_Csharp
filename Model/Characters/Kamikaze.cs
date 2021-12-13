@@ -1,15 +1,17 @@
-﻿using System;
+﻿using LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LEBON_Nathan_DM_IPI_2021_2022.Model.TypeOfCharacter
+namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Priest : Character
+    class Kamikaze : Character, IPainSensitive
     {
-        public Priest(string name)
+        public int AttackCapability { get; set; } = -1;
+        public Kamikaze(string name)
         {
-            this.type = "Prêtre";
-            this.name = name;
+            this.type = "Kamikaze";
+            this.name = name + "[" + this.type + "]";
             this.attack = 50;
             this.defense = 125;
             this.initiative = 20;
