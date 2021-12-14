@@ -18,9 +18,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces
                 //Console.WriteLine("Pourcentage de chance d'avoir la DOULEUR: "+percentLosingAttackAbility);
                 //Sur une plage de 1 à 100, on tire aléatoirement un nombre.
                 //Si le nombre est compris entre 1 et le pourcentage, le personnage perd sa capacité d'attaque. 
-                if (Program.random.Next(1, 101) < percentLosingAttackAbility)
+                if (Utils.random.Next(1, 101) < percentLosingAttackAbility)
                 {
-                    AttackCapability = Program.random.Next(0, 3);
+                    AttackCapability = Utils.random.Next(0, 3);
                 }
             }
         }

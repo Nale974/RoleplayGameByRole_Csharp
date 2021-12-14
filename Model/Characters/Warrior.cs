@@ -25,7 +25,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             //Gestion de calcul de la douleur spécifique au guerrier
             //(Si ce trait de personnage devient plus commun il faudrait en faire une autre interface)
             int percentLosingAttackAbility = (damagesSuffered - remainingLife) * 2 / (remainingLife + damagesSuffered);
-            if (Program.random.Next(1, 101) < percentLosingAttackAbility)
+            if (Utils.random.Next(1, 101) < percentLosingAttackAbility)
             {
                 AttackCapability = 1;
             }

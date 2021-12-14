@@ -31,17 +31,17 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         public int CalculJetAttack()
         {
-            return this.attack + Program.random.Next(0, 100);
+            return this.attack + Utils.random.Next(0, 100);
         }
 
         public int CalculJetDefense()
         {
-            return this.defense+ Program.random.Next(0, 100);
+            return this.defense+ Utils.random.Next(0, 100);
         }
 
         public int CalculJetInitiative()
         {
-            return this.defense + Program.random.Next(0, 100);
+            return this.defense + Utils.random.Next(0, 100);
         }
 
         public void Attack(Character opponent, int bonus=0, int numberCounterAttack=0)
@@ -88,16 +88,17 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     }
 
                     if (opponent.currentLife <= 0) { Console.WriteLine(tabulation + opponent.name+" est K.O."); }
+                    this.currentAttackNumber--;
                 }
                 else //Si négatif
                 {
                     Console.WriteLine(tabulation + this.name + " à raté son attaque. ");
                     Console.WriteLine(tabulation + opponent.name + " tente une contre-attaque.");
                     numberCounterAttack++;
+
+                    this.currentAttackNumber--;
                     opponent.Attack(this, attackMargin, numberCounterAttack);
                 }
-                //incrément du nombre d'attaques restantes
-                this.currentAttackNumber--;
             }
             else
             {
