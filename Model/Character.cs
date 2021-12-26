@@ -18,7 +18,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
         public int maximumLife;
         public int currentLife;
         public int currentAttackNumber;
-        public int totalAttackNumber;
+        public int totalAttackNumber { get; set; }
         public DamageFeature damageFeature = DamageFeature.None;
         public CharacterFeature characterFeature = CharacterFeature.None;
 
@@ -85,6 +85,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     Console.WriteLine(tabulation + "DEBUG - " + this.name + " inflige (" + attackMargin + "*(" + this.damages +"+"+ lifelost+")/100)*"+criticalDamage+" , soit " + damagesSuffered +" de dommage.");
                     Console.Write(tabulation + this.name + " réussi son attaque, " + opponent.name + " perd " + damagesSuffered + " point de vie.\n");
 
+                    //Gestion du blocage de l'adversaire ou non
                     if (opponent.currentLife > 0 && opponent is IPainSensitive opponentPainSensitive)
                     {
                         opponentPainSensitive.CalculPainSensitive(damagesSuffered, opponent.currentLife);
@@ -94,9 +95,18 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         }
                     }
 
-                    if (opponent.currentLife <= 0) { 
-                        Console.WriteLine(tabulation + opponent.name+" est K.O."); 
+                    //Gestion de l'augmentation du "TotalAttackNumber" de l'adversaire ou non
+                    if(opponent is IIncreasedTotalAttackNumber opponentITAN)
+                    {
+                        Console.WriteLine(tabulation + "DEBUG - " + opponent.currentLife +" < "+ opponentITAN.totalAttackNumberLimit * opponent.currentLife);
+                        if (opponent.currentLife < opponentITAN.totalAttackNumberLimit * opponent.currentLife)
+                        {
+                            Console.WriteLine("Les points de vie de " + opponent.name + " descendent en dessous des " + opponentITAN.totalAttackNumberLimit * 100 + "%. Son nombre d'attaque total passe alors de " + opponentITAN.totalAttackNumber + " à " + opponentITAN.totalAttackNumberIncrease + " !");
+                            opponentITAN.totalAttackNumber = opponentITAN.totalAttackNumberIncrease;
+                        }
                     }
+
+                    if (opponent.currentLife <= 0) {Console.WriteLine(tabulation + opponent.name+" est K.O.");}
                     this.currentAttackNumber--;
                 }
                 else //Si négatif

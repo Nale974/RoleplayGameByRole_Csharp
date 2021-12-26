@@ -5,8 +5,11 @@ using System.Text;
 
 namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Berseker : Character, IAllLifeLostForDamage
+    class Berseker : Character, IAllLifeLostForDamage, IIncreasedTotalAttackNumber
     {
+        public int totalAttackNumberIncrease { get; set; } = 4;
+        public double totalAttackNumberLimit { get; set; } = 0.5;
+
         public Berseker(String name) : base(name)
         {
             this.type = "Berseker";
