@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Berseker : Character
+    class Berseker : Character, IAllLifeLostForDamage
     {
         public Berseker(String name) : base(name)
         {

@@ -71,16 +71,23 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         }
                     }
 
-                    //Calcul de l'attaque et déduction avec pdv de l'adversaires
-                    int damageSuffered = (attackMargin * this.damages / 100)*criticalDamage;
-                    opponent.currentLife -= damageSuffered;
+                    //Gestion de la caractéristique d'ajouter les points de vie perdu aux dégâts
+                    int lifelost = 0;
+                    if(this is IAllLifeLostForDamage thisCharacterAllLifeLostForDamage) { 
+                        lifelost = thisCharacterAllLifeLostForDamage.CalculLifeLost(this.maximumLife, this.currentLife);
+                        Console.WriteLine(tabulation + this.name+" ajoute ses "+ lifelost +" points de vie perdu à ses dégats.");
+                    }
 
-                    Console.WriteLine(tabulation + "DEBUG - " + this.name + " inflige " + attackMargin + "*" + this.damages + "/100 , soit " + damageSuffered +"*"+ criticalDamage+ " de dommage.");
-                    Console.Write(tabulation + this.name + " réussi son attaque, " + opponent.name + " perd " + damageSuffered + " point de vie.\n");
+                    //Calcul de l'attaque et déduction avec pdv de l'adversaires
+                    int damagesSuffered = (attackMargin * (this.damages + lifelost) / 100)*criticalDamage;
+                    opponent.currentLife -= damagesSuffered;
+
+                    Console.WriteLine(tabulation + "DEBUG - " + this.name + " inflige (" + attackMargin + "*(" + this.damages +"+"+ lifelost+")/100)*"+criticalDamage+" , soit " + damagesSuffered +" de dommage.");
+                    Console.Write(tabulation + this.name + " réussi son attaque, " + opponent.name + " perd " + damagesSuffered + " point de vie.\n");
 
                     if (opponent.currentLife > 0 && opponent is IPainSensitive opponentPainSensitive)
                     {
-                        opponentPainSensitive.CalculPainSensitive(damageSuffered, opponent.currentLife);
+                        opponentPainSensitive.CalculPainSensitive(damagesSuffered, opponent.currentLife);
                         if (opponentPainSensitive.AttackCapability >= 0)
                         {
                             Console.WriteLine(tabulation + opponent.name + "est sensible à la douleur, il est bloqué pendant " + (opponentPainSensitive.AttackCapability + 1) + " tour(s).");
