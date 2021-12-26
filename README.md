@@ -17,7 +17,7 @@
 		- Morts-vivants (Zombie, Liche, Goule, Vampire) =  sont Maudit
 
 - Charognard -> interface
-	- Quand un autre perso meurt charo gagne entre 50 et 100 pdv
+	- Quand un autre perso meurt le charognard gagne entre 50 et 100 pdv
 	- Liste personnage : Zombie, Goule
 
 Autres : 
@@ -28,7 +28,7 @@ Autres :
 	- Jet avec valeur fixe de 50 (Robot)
 	- Augmente attaque de 50% à chaque tour
 	- Soigne de la moitié des dégâts qu’il inflige pendant le tour (Vampire)
-	- Durant une attaque, pour chaque joueur (et moi), j'ai 50% de chance de l'attaquer (avec le même jet) (Kamikaze)
+	- Durant une attaque, pour chaque joueur (et l'attaquant), lr joueur à 50% de chance d'être attaquer (avec le même jet) (Kamikaze)
 	- Impossible de contre-attaquer mon attaque, juste defendre (Kamikaze)
 	- Cible en priorité mort-vivant (Prêtre)
 

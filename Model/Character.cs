@@ -87,7 +87,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         }
                     }
 
-                    if (opponent.currentLife <= 0) { Console.WriteLine(tabulation + opponent.name+" est K.O."); }
+                    if (opponent.currentLife <= 0) { 
+                        Console.WriteLine(tabulation + opponent.name+" est K.O."); 
+                    }
                     this.currentAttackNumber--;
                 }
                 else //Si négatif

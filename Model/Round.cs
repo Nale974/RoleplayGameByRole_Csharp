@@ -28,28 +28,28 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
             Console.WriteLine("");
 
             //Calcul d'initiative
-            List<Character> charactersOrderByInitiative = CalculInitiative(characters);
+            this.characters = CalculInitiative(characters);
 
             //Pour chaque personnage du round
-            for (int i = 0; i < charactersOrderByInitiative.Count(); i++)
+            for (int i = 0; i < characters.Count(); i++)
             {
                 if (this.CheckWinner() == true) { break; }
                 //Si le personnage est en vie
-                if (charactersOrderByInitiative[i].currentLife > 0)
+                if (characters[i].currentLife > 0)
                 {
                     //Cas où le personnage est sensible et victime de la douleur
-                    if (charactersOrderByInitiative[i] is IPainSensitive characterPainSensitive && characterPainSensitive.AttackCapability >= 0)
+                    if (characters[i] is IPainSensitive characterPainSensitive && characterPainSensitive.AttackCapability >= 0)
                     {
-                        Console.WriteLine(charactersOrderByInitiative[i].name + " est bloqué pendant encore " + (characterPainSensitive.AttackCapability + 1) + " tour(s).");
+                        Console.WriteLine(characters[i].name + " est bloqué pendant encore " + (characterPainSensitive.AttackCapability + 1) + " tour(s).");
                         characterPainSensitive.AttackCapability -= 1;
                     }
                     else
                     {
                         //jusqu'a que le personnage n'a plus d'attaque de disponible
-                        while (charactersOrderByInitiative[i].currentAttackNumber > 0)
+                        while (characters[i].currentAttackNumber > 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("\nC'est au tour de " + charactersOrderByInitiative[i].name + ".");
+                            Console.WriteLine("\nC'est au tour de " + characters[i].name + ".");
                             Console.ResetColor();
                             Console.Write("\n");
 
@@ -57,14 +57,28 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                             int idDefender = i;
                             while (idDefender == i)
                             {
-                                idDefender = Utils.random.Next(0, charactersOrderByInitiative.Count());
+                                idDefender = Utils.random.Next(0, characters.Count());
                             }
 
                             //Initialisation des 2 joueurs d'une attaque
-                            Character attacker = charactersOrderByInitiative[i];
-                            Character defender = charactersOrderByInitiative[idDefender];
+                            Character attacker = characters[i];
+                            Character defender = characters[idDefender];
 
                             attacker.Attack(defender);
+
+                            //Si l'un des personnages est mort pendant l'attaque 
+                            if (attacker.currentLife <= 0 || defender.currentLife <= 0)
+                            {
+                                foreach (var character in characters)
+                                {
+                                    if (character.currentLife > 0 && character is IScavenger characterScavenger)
+                                    {
+                                        int lifePointsWon = characterScavenger.LifePointsWon();
+                                        character.currentLife += lifePointsWon;
+                                        Console.WriteLine(character.name+ " mange le cadavre ce qui lui permet de récupérer "+ lifePointsWon + " points de vie");
+                                    }
+                                }
+                            }
                             if (this.CheckWinner() == true){break;}
                         }
                     }
@@ -72,7 +86,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
             }
 
             Console.WriteLine("\nBilan point de vie:");
-            charactersOrderByInitiative.ForEach(c => Console.WriteLine(c.name + " : " + c.currentLife));
+            characters.ForEach(c => Console.WriteLine(c.name + " : " + c.currentLife));
 
         }
 

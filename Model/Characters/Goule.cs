@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Goule : Character
+    class Goule : Character, IScavenger
     {
         public Goule(string name)
         {
