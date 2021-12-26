@@ -5,9 +5,10 @@ using System.Text;
 
 namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Guardian : Character, IPainSensitive
+    class Guardian : Character, IPainSensitive, ICounterAttackBonus
     {
         int IPainSensitive.AttackCapability { get; set; } = -1;
+        int ICounterAttackBonus.CounterAttackBonus { get; set; } = 2;
         public Guardian(String name) : base(name)
         {
             this.type = "Gardien";

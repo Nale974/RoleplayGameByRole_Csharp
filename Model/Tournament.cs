@@ -10,7 +10,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         public void Run()
         {
-            this.characters.AddRange(new List<Character> { new Characters.Zombie("Hector"), new Characters.Goule("Simon") });
+            this.characters.AddRange(new List<Character> { new Characters.Guardian("Hector"), new Characters.Berseker("Simon") });
 
             //Tant que la vie d'un des personnage est positif, on lance un nouveau round
             var roundNumber = 1;

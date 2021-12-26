@@ -10,11 +10,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022
     {
         static void Main(string[] args)
         {
-            //for (int i = 0; i < 10; i++)
-            //{
-                Tournament tournament = new Tournament();
-                tournament.Run();
-            //}
+            Tournament tournament = new Tournament();
+            tournament.Run();
         }
     }
 }

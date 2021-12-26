@@ -60,14 +60,11 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                 idDefender = Utils.random.Next(0, characters.Count());
                             }
 
-                            //Initialisation des 2 joueurs d'une attaque
-                            Character attacker = characters[i];
-                            Character defender = characters[idDefender];
-
-                            attacker.Attack(defender);
+                            //L'attaquant attaque le defenseur
+                            characters[i].Attack(characters[idDefender]);
 
                             //Si l'un des personnages est mort pendant l'attaque 
-                            if (attacker.currentLife <= 0 || defender.currentLife <= 0)
+                            if (characters[i].currentLife <= 0 || characters[idDefender].currentLife <= 0)
                             {
                                 foreach (var character in characters)
                                 {

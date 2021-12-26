@@ -67,7 +67,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     {
                         if (this.damageFeature.ToString() == weakness) {
                             criticalDamage = 2; 
-                            Console.WriteLine(tabulation + "Dommages multipliés !"); 
+                            Console.WriteLine(tabulation + opponent.name + " est sensible au type "+ weakness + ". Les dommages sont multipliés par 2 !"); 
                         }
                     }
 
@@ -75,7 +75,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     int damageSuffered = (attackMargin * this.damages / 100)*criticalDamage;
                     opponent.currentLife -= damageSuffered;
 
-                    Console.WriteLine(tabulation + "DEBUG - " + this.name + " inflige " + attackMargin + "*" + this.damages + "/100 , soit " + damageSuffered + " de dommage.");
+                    Console.WriteLine(tabulation + "DEBUG - " + this.name + " inflige " + attackMargin + "*" + this.damages + "/100 , soit " + damageSuffered +"*"+ criticalDamage+ " de dommage.");
                     Console.Write(tabulation + this.name + " réussi son attaque, " + opponent.name + " perd " + damageSuffered + " point de vie.\n");
 
                     if (opponent.currentLife > 0 && opponent is IPainSensitive opponentPainSensitive)
@@ -99,7 +99,15 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     numberCounterAttack++;
 
                     this.currentAttackNumber--;
-                    opponent.Attack(this, attackMargin, numberCounterAttack);
+
+                    // Gestion des bonus de contre-attaque
+                    if(opponent is ICounterAttackBonus opponentCounterAttackBonus)
+                    {
+                        Console.WriteLine(tabulation+opponent.name+" à un bonus de contre-attaque de "+ opponentCounterAttackBonus.CounterAttackBonus + " !");
+                        opponent.Attack(this, (attackMargin*opponentCounterAttackBonus.CounterAttackBonus) , numberCounterAttack);
+                    }
+                    else { opponent.Attack(this, attackMargin, numberCounterAttack); }
+                    
                 }
             }
             else
