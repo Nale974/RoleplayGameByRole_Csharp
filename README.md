@@ -40,4 +40,5 @@ TODO :
 - Respecter les regles de nommage sur les accesseurs
 - Checkwinner en faire un paramètre
 - Formatter les percent
-- Formatter instaciation d'interface
+- Formatter instanciation d'interface
+- Revoir les premières interfaces

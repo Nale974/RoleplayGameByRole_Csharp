@@ -49,7 +49,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         Console.WriteLine("L'attaque de "+ characters[i].name+" augmente de "+ CharacterIncreasedAttack.IncreasedAttack*100+ "%, il est maintenant de "+ CharacterIncreasedAttack.attack+".");
                     }
 
-                    //Cas où le personnage est sensible et victime de la douleur
+                    // Gestion de la caratéristique de la douleur : 
+                    // Si le personnage est victime de la douleur
                     if (characters[i] is IPainSensitive characterPainSensitive && characterPainSensitive.AttackCapability >= 0)
                     {
                         Console.WriteLine(characters[i].name + " est bloqué pendant encore " + (characterPainSensitive.AttackCapability + 1) + " tour(s).");
@@ -57,20 +58,21 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     }
                     else
                     {
-                        //jusqu'a que le personnage n'a plus d'attaque de disponible
+                        // Jusqu'a que le personnage n'a plus d'attaque de disponible
                         while (characters[i].currentAttackNumber > 0)
                         {
-                            //Choisi un adversaire aléatoirement dans le reste de la liste
+                            // Choisi un adversaire aléatoirement dans le reste de la liste
                             int idDefender = i;
                             while (idDefender == i)
                             {
                                 idDefender = Utils.random.Next(0, characters.Count());
                             }
 
-                            //L'attaquant attaque le defenseur
+                            // L'attaquant attaque le defenseur
                             characters[i].Attack(characters[idDefender]);
 
-                            //Si l'un des personnages est mort pendant l'attaque 
+                            // Gestion de la caratéristique charognard :
+                            // Si l'un des personnages est mort pendant l'attaque 
                             if (characters[i].currentLife <= 0 || characters[idDefender].currentLife <= 0)
                             {
                                 foreach (var character in characters)
@@ -83,6 +85,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                     }
                                 }
                             }
+                            
+                            // Si il y a un gagnant, on arrête le tour
                             if (this.CheckWinner() == true){break;}
                         }
                     }

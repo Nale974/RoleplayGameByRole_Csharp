@@ -94,7 +94,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         Console.WriteLine(tabulation + this.name+" ajoute ses "+ lifelost +" points de vie perdu à ses dégats.");
                     }
 
-                    //Calcul de l'attaque et déduction avec pdv de l'adversaire
+                    // Calcul de l'attaque et déduction avec pdv de l'adversaire
                     int damagesSuffered = (attackMargin * (this.damages + lifelost) / 100)*criticalDamage;
                     opponent.currentLife -= damagesSuffered;
 
@@ -109,7 +109,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         this.currentLife += recoveredLife;
                     }
 
-                    // Gestion de la particularité du blocage de l'adversaire 
+                    // Gestion de la caratéristique de la douleur : 
+                    // Si l'adversaire est sensible à la douleur
                     if (opponent.currentLife > 0 && opponent is IPainSensitive opponentPainSensitive)
                     {
                         opponentPainSensitive.CalculPainSensitive(damagesSuffered, opponent.currentLife);
