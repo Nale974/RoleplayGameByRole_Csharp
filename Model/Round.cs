@@ -37,6 +37,18 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                 //Si le personnage est en vie
                 if (characters[i].currentLife > 0)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nC'est au tour de " + characters[i].name + ".");
+                    Console.ResetColor();
+                    Console.Write("\n");
+
+                    // Gestion de la caratéristique d'augmentation de l'attaque à chaque tour
+                    if (characters[i] is IIncreasedAttack CharacterIncreasedAttack)
+                    {
+                        CharacterIncreasedAttack.attack = CharacterIncreasedAttack.attack + (int)(CharacterIncreasedAttack.attack * CharacterIncreasedAttack.IncreasedAttack);
+                        Console.WriteLine("L'attaque de "+ characters[i].name+" augmente de "+ CharacterIncreasedAttack.IncreasedAttack*100+ "%, il est maintenant de "+ CharacterIncreasedAttack.attack+".");
+                    }
+
                     //Cas où le personnage est sensible et victime de la douleur
                     if (characters[i] is IPainSensitive characterPainSensitive && characterPainSensitive.AttackCapability >= 0)
                     {
@@ -48,11 +60,6 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         //jusqu'a que le personnage n'a plus d'attaque de disponible
                         while (characters[i].currentAttackNumber > 0)
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("\nC'est au tour de " + characters[i].name + ".");
-                            Console.ResetColor();
-                            Console.Write("\n");
-
                             //Choisi un adversaire aléatoirement dans le reste de la liste
                             int idDefender = i;
                             while (idDefender == i)
