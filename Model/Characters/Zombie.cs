@@ -20,7 +20,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.currentAttackNumber = 1;
             this.totalAttackNumber = 1;
             this.characterFeature = Enum.CharacterFeature.Cursed;
-            this.counterAttackPossibility = false;
+            this.myPossibilityToCounterAttacksOfMyOpponent = false;
         }
     }
 }

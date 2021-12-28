@@ -21,7 +21,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
         public int totalAttackNumber { get; set; }
         public DamageFeature damageFeature { get; set; }
         public CharacterFeature characterFeature { get; set; }
-        public bool counterAttackPossibility { get; set; }
+        public bool myPossibilityToCounterAttacksOfMyOpponent { get; set; }
+        public bool thePossibilityThatMyOpponentsCounterMyAttack { get; set; }
 
         public Character(){}
 
@@ -30,7 +31,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
             this.name = name;
             this.damageFeature = DamageFeature.None;
             this.characterFeature = CharacterFeature.None;
-            this.counterAttackPossibility = true;
+            this.myPossibilityToCounterAttacksOfMyOpponent = true;
+            this.thePossibilityThatMyOpponentsCounterMyAttack = true;
         }
 
         protected int GenerateNumberForJet()
@@ -136,8 +138,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     Console.WriteLine(tabulation + this.name + " à raté son attaque. ");
                     this.currentAttackNumber--;
 
-                    // Gestion de la particularité de la possibilité de contre-attaquer
-                    if (opponent.counterAttackPossibility == true)
+                    // Gestion de la particularité de la possibilité de contrer les attaques de mes adversaire
+                    // Et de la particularité que les adversaires puissent contrer mon attaque
+                    if (opponent.myPossibilityToCounterAttacksOfMyOpponent == true && this.thePossibilityThatMyOpponentsCounterMyAttack == true)
                     {
                         Console.WriteLine(tabulation + opponent.name + " tente une contre-attaque.");
                         numberCounterAttack++;
