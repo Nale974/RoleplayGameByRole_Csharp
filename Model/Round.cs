@@ -94,10 +94,10 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
             foreach (var character in characters)
             {
                 //Console.WriteLine(character.Name + " " + (character.Initiative + random.Next(1, 100)));
-                int newInitiative = character.initiative + Utils.random.Next(1, 100);
+                int newInitiative = character.CalculJetInitiative();
                 while (charactersWithInitiative.ContainsKey(newInitiative))
                 {
-                    newInitiative = character.initiative + Utils.random.Next(1, 100);
+                    newInitiative = character.CalculJetInitiative();
                 }
                 charactersWithInitiative.Add(newInitiative, character);
                 Console.WriteLine("     " + character.name + " : " + newInitiative);

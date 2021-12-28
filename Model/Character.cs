@@ -9,39 +9,53 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 {
     class Character
     {
-        public String type;
-        public String name;
-        public int attack;
-        public int defense;
-        public int initiative;
-        public int damages;
-        public int maximumLife;
-        public int currentLife;
-        public int currentAttackNumber;
+        public String type { get; set; }
+        public String name { get; set; }
+        public int attack { get; set; }
+        public int defense { get; set; }
+        public int initiative { get; set; }
+        public int damages { get; set; }
+        public int maximumLife { get; set; }
+        public int currentLife { get; set; }
+        public int currentAttackNumber { get; set; }
         public int totalAttackNumber { get; set; }
-        public DamageFeature damageFeature = DamageFeature.None;
-        public CharacterFeature characterFeature = CharacterFeature.None;
+        public DamageFeature damageFeature { get; set; }
+        public CharacterFeature characterFeature { get; set; }
+        public bool counterAttackPossibility { get; set; }
 
         public Character(){}
 
         public Character(string name)
         {
             this.name = name;
+            this.damageFeature = DamageFeature.None;
+            this.characterFeature = CharacterFeature.None;
+            this.counterAttackPossibility = true;
+        }
+
+        protected int GenerateNumberForJet()
+        {
+            //Gestion de jet spécifique
+            if (this is ISpecificNumberForJet IspecificNumberForJet)
+            {
+                return IspecificNumberForJet.SpecificNumberForJet;
+            }
+            else { return Utils.random.Next(0, 100); }
         }
 
         public int CalculJetAttack()
         {
-            return this.attack + Utils.random.Next(0, 100);
+            return this.attack + GenerateNumberForJet();
         }
 
         public int CalculJetDefense()
         {
-            return this.defense+ Utils.random.Next(0, 100);
+            return this.defense + GenerateNumberForJet();
         }
 
         public int CalculJetInitiative()
         {
-            return this.defense + Utils.random.Next(0, 100);
+            return this.initiative + GenerateNumberForJet();
         }
 
         public void Attack(Character opponent, int bonus=0, int numberCounterAttack=0)
@@ -112,18 +126,23 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                 else //Si négatif
                 {
                     Console.WriteLine(tabulation + this.name + " à raté son attaque. ");
-                    Console.WriteLine(tabulation + opponent.name + " tente une contre-attaque.");
-                    numberCounterAttack++;
-
                     this.currentAttackNumber--;
 
-                    // Gestion des bonus de contre-attaque
-                    if(opponent is ICounterAttackBonus opponentCounterAttackBonus)
+                    // Gestion de la possibilité de contre-attaquer
+                    if (opponent.counterAttackPossibility == true)
                     {
-                        Console.WriteLine(tabulation+opponent.name+" à un bonus de contre-attaque de "+ opponentCounterAttackBonus.CounterAttackBonus + " !");
-                        opponent.Attack(this, (attackMargin*opponentCounterAttackBonus.CounterAttackBonus) , numberCounterAttack);
+                        Console.WriteLine(tabulation + opponent.name + " tente une contre-attaque.");
+                        numberCounterAttack++;
+
+                        // Gestion des bonus de contre-attaque
+                        if (opponent is ICounterAttackBonus opponentCounterAttackBonus)
+                        {
+                            Console.WriteLine(tabulation + opponent.name + " à un bonus de contre-attaque de " + opponentCounterAttackBonus.CounterAttackBonus + " !");
+                            opponent.Attack(this, (attackMargin * opponentCounterAttackBonus.CounterAttackBonus), numberCounterAttack);
+                        }
+                        else { opponent.Attack(this, attackMargin, numberCounterAttack); }
                     }
-                    else { opponent.Attack(this, attackMargin, numberCounterAttack); }
+                    else { Console.WriteLine( opponent.name + " ne peut pas contre-attaquer."); }
                     
                 }
             }

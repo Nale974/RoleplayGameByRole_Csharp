@@ -5,9 +5,10 @@ using System.Text;
 
 namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Robot : Character, IPainSensitive
+    class Robot : Character, IPainSensitive, ISpecificNumberForJet
     {
         public int AttackCapability { get; set; } = -1;
+        public int SpecificNumberForJet { get; set; } = 50;
         public Robot(string name)
         {
             this.type = "Robot";

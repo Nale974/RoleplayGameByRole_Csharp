@@ -20,6 +20,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.currentLife = 500;
             this.currentAttackNumber = 6;
             this.totalAttackNumber = 6;
+            this.counterAttackPossibility = false;
         }
     }
 }
