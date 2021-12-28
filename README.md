@@ -28,9 +28,16 @@ Autres :
 	- Jet avec valeur fixe de 50 (Robot)
 	- Augmente attaque de 50% à chaque tour
 	- Soigne de la moitié des dégâts qu’il inflige pendant le tour (Vampire)
-	- Durant une attaque, pour chaque joueur (et l'attaquant), lr joueur à 50% de chance d'être attaquer (avec le même jet) (Kamikaze)
+	- Durant une attaque, pour chaque joueur (et l'attaquant), le joueur à 50% de chance d'être attaquer (avec le même jet) (Kamikaze)
 	- Impossible de contre-attaquer mon attaque, juste defendre (Kamikaze)
 	- Cible en priorité mort-vivant (Prêtre)
 
 - Vivant : Guerrier, Gardien, Berserker, Robot, Kamikaze, Prêtre
 - Mort-vivant : Zombie, Liche, Goule, Vampire
+
+TODO :
+- Formatter les commentaires de caratéristique spéciaux
+- Respecter les regles de nommage sur les accesseurs
+- Checkwinner en faire un paramètre
+- Formatter les percent
+- Formatter instaciation d'interface

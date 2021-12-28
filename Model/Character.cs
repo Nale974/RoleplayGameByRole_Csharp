@@ -75,7 +75,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                 Console.Write(tabulation + "DEBUG - Jet d'attaque de " + this.name + " = " + jetAttack + " et jet de défense de " + opponent.name + " = " + jetDefense + "\n");
                 if (attackMargin > 0)
                 {
-                    //Gestion des types de personnage et d'attaque
+                    // Gestion de la particularité des types de personnage et d'attaque
                     int criticalDamage = 1;
                     foreach (var weakness in DamageFeatureDictionnary.weaknessList[opponent.characterFeature.ToString()])
                     {
@@ -85,21 +85,29 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         }
                     }
 
-                    //Gestion de la caractéristique d'ajouter les points de vie perdu aux dégâts
+                    // Gestion de la particularité d'ajouter les points de vie perdu aux dégâts
                     int lifelost = 0;
                     if(this is IAllLifeLostForDamage thisCharacterAllLifeLostForDamage) { 
                         lifelost = thisCharacterAllLifeLostForDamage.CalculLifeLost(this.maximumLife, this.currentLife);
                         Console.WriteLine(tabulation + this.name+" ajoute ses "+ lifelost +" points de vie perdu à ses dégats.");
                     }
 
-                    //Calcul de l'attaque et déduction avec pdv de l'adversaires
+                    //Calcul de l'attaque et déduction avec pdv de l'adversaire
                     int damagesSuffered = (attackMargin * (this.damages + lifelost) / 100)*criticalDamage;
                     opponent.currentLife -= damagesSuffered;
 
                     Console.WriteLine(tabulation + "DEBUG - " + this.name + " inflige (" + attackMargin + "*(" + this.damages +"+"+ lifelost+")/100)*"+criticalDamage+" , soit " + damagesSuffered +" de dommage.");
                     Console.Write(tabulation + this.name + " réussi son attaque, " + opponent.name + " perd " + damagesSuffered + " point de vie.\n");
 
-                    //Gestion du blocage de l'adversaire ou non
+                    // Gestion de la particularité de la récupération de vie selon les dégats infligés
+                    if (this is ICareAccordingToDamageInflicted iCareAccordingToDamageInflicted)
+                    {
+                        int recoveredLife = (int)(damagesSuffered * iCareAccordingToDamageInflicted.CareAccordingPercent);
+                        Console.WriteLine(tabulation+this.name+" récupére "+recoveredLife+" de point de vie en attaquant.");
+                        this.currentLife += recoveredLife;
+                    }
+
+                    // Gestion de la particularité du blocage de l'adversaire 
                     if (opponent.currentLife > 0 && opponent is IPainSensitive opponentPainSensitive)
                     {
                         opponentPainSensitive.CalculPainSensitive(damagesSuffered, opponent.currentLife);
@@ -109,8 +117,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         }
                     }
 
-                    //Gestion de l'augmentation du "TotalAttackNumber" de l'adversaire ou non
-                    if(opponent is IIncreasedTotalAttackNumber opponentITAN)
+                    // Gestion de la particularité de l'augmentation du "TotalAttackNumber" de l'adversaire
+                    if (opponent is IIncreasedTotalAttackNumber opponentITAN)
                     {
                         Console.WriteLine(tabulation + "DEBUG - " + opponent.currentLife +" < "+ opponentITAN.totalAttackNumberLimit * opponent.currentLife);
                         if (opponent.currentLife < opponentITAN.totalAttackNumberLimit * opponent.currentLife)
@@ -128,13 +136,13 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     Console.WriteLine(tabulation + this.name + " à raté son attaque. ");
                     this.currentAttackNumber--;
 
-                    // Gestion de la possibilité de contre-attaquer
+                    // Gestion de la particularité de la possibilité de contre-attaquer
                     if (opponent.counterAttackPossibility == true)
                     {
                         Console.WriteLine(tabulation + opponent.name + " tente une contre-attaque.");
                         numberCounterAttack++;
 
-                        // Gestion des bonus de contre-attaque
+                        // Gestion de la particularité des bonus de contre-attaque
                         if (opponent is ICounterAttackBonus opponentCounterAttackBonus)
                         {
                             Console.WriteLine(tabulation + opponent.name + " à un bonus de contre-attaque de " + opponentCounterAttackBonus.CounterAttackBonus + " !");

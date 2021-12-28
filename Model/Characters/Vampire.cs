@@ -1,11 +1,15 @@
-﻿using System;
+﻿using LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Vampire : Character
+    class Vampire : Character, ICareAccordingToDamageInflicted
     {
+        public int DamageInflicted { get; set; }
+        public double CareAccordingPercent { get; set; }
+
         public Vampire(string name)
         {
             this.type = "Vampire";
@@ -19,6 +23,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.currentAttackNumber = 2;
             this.totalAttackNumber = 2;
             this.characterFeature = Enum.CharacterFeature.Cursed;
+            this.DamageInflicted = 0;
+            this.CareAccordingPercent = 0.50;
         }
     }
 }
