@@ -4,7 +4,6 @@ C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_202
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\bin\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.runtimeconfig.dev.json
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\bin\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.dll
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\bin\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.pdb
-C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.csproj.AssemblyReference.cache
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.AssemblyInfoInputs.cache
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.AssemblyInfo.cs
@@ -12,3 +11,4 @@ C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_202
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.dll
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.pdb
 C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.genruntimeconfig.cache
+C:\Users\natha\Google Drive\Professionnel\MASTER\C#\LEBON_Nathan_DM_IPI_2021_2022\obj\Debug\netcoreapp3.1\LEBON_Nathan_DM_IPI_2021_2022.csproj.AssemblyReference.cache

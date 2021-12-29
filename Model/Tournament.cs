@@ -8,11 +8,16 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
     {
         public List<Character> characters = new List<Character>();
 
+        public Tournament(List<Character> characters)
+        {
+            this.characters = characters;
+        }
+
         public void Run()
         {
-            this.characters.AddRange(new List<Character> { new Characters.Zombie("Hector"), new Characters.Priest("Simon"), new Characters.Warrior("Léa") });
+            //this.characters.AddRange(new List<Character> { new Characters.Zombie("Hector"), new Characters.Berseker("Simon") });
 
-            //Tant que la vie d'un des personnage est positif, on lance un nouveau round
+            // Tant que la vie d'un des personnage est positif, on lance un nouveau round
             var roundNumber = 1;
             var playerWin = false;
 
@@ -22,11 +27,12 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
             Character winner = new Character();
             while (playerWin == false)
             {
+                Console.WriteLine("\nTapez sur le bouton entrée pour continuez.");
+                Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.BackgroundColor = ConsoleColor.Gray;
                 Console.WriteLine("\n Tour " + roundNumber + " :");
                 Console.ResetColor();
-                //Console.ReadLine();
 
                 Round round = new Round(this.characters);
                 round.Run();

@@ -6,9 +6,16 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Interfaces
 {
     interface IScavenger
     {
-        int LifePointsWon()
+        public int currentLife { get; set; }
+        int LifePointsWon(int deaths)
         {
-            return Utils.random.Next(50, 100);
+            int lifePointsWon = 0;
+            for (int j = 0; j < deaths; j++)
+            {
+                lifePointsWon =+ Utils.random.Next(50, 100);
+            }
+            currentLife += lifePointsWon;
+            return lifePointsWon;
         }
     }
 }

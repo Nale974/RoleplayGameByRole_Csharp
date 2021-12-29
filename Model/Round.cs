@@ -19,48 +19,51 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         public void Run()
         {
-            // Rétablissement des niveaux d'attaque par défaut
+            // Rétablissement du nombre d'attaques par défaut par personnages
             characters.ForEach(c => c.currentAttackNumber = c.totalAttackNumber);
 
-            // Suivi nombre d'attaque
-            Console.WriteLine("DEBUG - Nombre d'attaque : ");
-            characters.ForEach(c => Console.WriteLine("     " + c.name + " : " + c.currentAttackNumber));
-            Console.WriteLine("");
+            // Suivi du nombre d'attaques
+            /*Console.WriteLine("DEBUG - Nombre d'attaque : ");
+            characters.ForEach(c => Console.WriteLine(c.name + " : " + c.currentAttackNumber));
+            Console.WriteLine("");*/
 
             // Calcul d'initiative
             this.characters = CalculInitiative(characters);
+            Console.WriteLine("");
 
-            // Gestion des caratéristiques de début de tour
+            // Gestion des particularités de début de tour
             foreach (Character character in characters)
             {
-                // Gestion de la caratéristique d'augmentation de l'attaque à chaque tour
+                // Gestion de la particularité d'augmentation de l'attaque à chaque tour
                 if (character.currentLife > 0 && character is IIncreasedAttack CharacterIncreasedAttack)
                 {
                     CharacterIncreasedAttack.attack += (int)(CharacterIncreasedAttack.attack * CharacterIncreasedAttack.IncreasedAttack);
                     Console.WriteLine("L'attaque de " + character.name + " augmente de " + CharacterIncreasedAttack.IncreasedAttack * 100 + "%, il est maintenant de " + CharacterIncreasedAttack.attack + ".");
                 }
 
-                // Gestion de la caratéristique de soins récurrent
+                // Gestion de la particularité de soins récurrent
                 if (character.currentLife > 0 && character is IRecurrentCare characterRecurrentCare)
                 {
                     characterRecurrentCare.Care();
-                    Console.WriteLine(character.name + " regagne " + characterRecurrentCare.recurrentCarePercent * 100 + "% de sa vie, il a maintenant " + character.currentLife + " pdv.");
+                    Console.WriteLine(character.name + " regagne " + characterRecurrentCare.recurrentCarePercent * 100 + "% de sa vie maximum, il a maintenant " + character.currentLife + " pdv.");
                 }
             }
 
-            //Pour chaque personnage du round
+            // Pour chaque personnage du round
             for (int i = 0; i < characters.Count(); i++)
             {
+                //Si il y a un gagnant, on arrête le tour
                 if (this.CheckWinner() == true) { break; }
-                //Si le personnage est en vie
+
+                // Si le personnage est en vie
                 if (characters[i].currentLife > 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("\nC'est au tour de " + characters[i].name + ".");
                     Console.ResetColor();
                     Console.Write("\n");
 
-                    // Gestion de la caratéristique de la douleur : 
+                    // Gestion de la particularité de la douleur : 
                     // Si le personnage est victime de la douleur
                     if (characters[i] is IPainSensitive characterPainSensitive && characterPainSensitive.AttackCapability >= 0)
                     {
@@ -75,7 +78,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                         {
                             List<Character> defenders = new List<Character>();
 
-                            // Gestion de la caratéristique des attaques multiples
+                            // Gestion de la particularité des attaques multiples
                             if (characters[i].multipleAttack == true)
                             {
                                 foreach (Character character in characters)
@@ -88,13 +91,11 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                             }
                             else // Cas classique
                             {
-                                // Gestion de la caratéristique des attaques ciblés
+                                // Gestion de la particularité des attaques ciblés
                                 if (characters[i] is ITargetsPriorityCategory targetsPriorityCategory)
                                 {
                                     int idDefenderPriorityCategory;
                                     List<Character> charactersAliveTargetsPriorityCategory = targetsPriorityCategory.CharactersAliveTargetsPriorityCategory(this.characters);
-                                    Console.WriteLine("charactersAliveTargetsPriorityCategory: ");
-                                    charactersAliveTargetsPriorityCategory.ForEach(c => Console.WriteLine(c.name));
                                     if (charactersAliveTargetsPriorityCategory.Count() != 0)
                                     {
                                         idDefenderPriorityCategory = Utils.random.Next(0, charactersAliveTargetsPriorityCategory.Count());
@@ -102,9 +103,10 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                     }
                                 }
 
+                                // Cas classique
                                 if (defenders.Count() == 0)
                                 {
-                                    // Cas classique : choisi un adversaire aléatoirement dans le reste de la liste
+                                    // Choisi un adversaire aléatoirement dans le reste de la liste
                                     int idDefender = i;
                                     while (idDefender == i || characters[idDefender].currentLife < 0)
                                     {
@@ -119,7 +121,10 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                             // L'attaquant attaque les defenseurs
                             characters[i].Attack(defenders);
 
-                            // Gestion de la caractéristique du charognard :
+                            //Gestion de la particularité de la douleur
+                            if (characters[i] is IPainSensitive characterPainSensitiveSecure && characterPainSensitiveSecure.AttackCapability >= 0) { break;}
+
+                            // Gestion de la particularité du charognard :
                             // Si l'un ou plusieurs des personnages est mort pendant l'attaque
                             int deaths = 0;
                             if (characters[i].currentLife <= 0){ deaths++; }
@@ -134,12 +139,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                             {
                                 if (character.currentLife > 0 && character is IScavenger characterScavenger)
                                 {
-                                    int lifePointsWon=0;
-                                    for (int j = 0; j < deaths; j++)
-                                    {
-                                        lifePointsWon =+ characterScavenger.LifePointsWon();
-                                    }
-                                    character.currentLife += lifePointsWon;
+                                    int lifePointsWon = characterScavenger.LifePointsWon(deaths);
                                     if (lifePointsWon>0) { Console.WriteLine(character.name + " mange le(s) cadavre(s) ce qui lui permet de récupérer " + lifePointsWon + " points de vie"); }
                                 }
                             }
@@ -150,8 +150,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     }
                 }
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\nBilan point de vie:");
+            Console.ResetColor();
             characters.ForEach(c => Console.WriteLine(c.name + " : " + c.currentLife));
 
         }
@@ -159,7 +160,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
         private List<Character> CalculInitiative(List<Character> characters)
         {
             Dictionary<int, Character> charactersWithInitiative = new Dictionary<int, Character>();
-            Console.WriteLine("DEBUG - Jet d'initiative : ");
+            Console.WriteLine("Jet d'initiative : ");
             foreach (var character in characters)
             {
                 //Console.WriteLine(character.Name + " " + (character.Initiative + random.Next(1, 100)));

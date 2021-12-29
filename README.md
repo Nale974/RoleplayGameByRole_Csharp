@@ -24,7 +24,7 @@ Autres :
 	- Bonus de contre-attaque doublé (Gardien)
 	- Ajout tous les points de vie perdu aux dégâts pour l'attaque (Berserker)
 	- TotalAttackNumber passe à 4 si sa vie est en dessous de 50% (Berserker)
-	- TODO Jet de défense toujours égal à 0 (Zombie)
+	- Jet de défense toujours égal à 0 (Zombie)
 	- Peut pas contre-attaquer (Zombie, Kamikaze)
 	- Jet avec valeur fixe de 50 (Robot)
 	- Augmente attaque de 50% à chaque tour (Robot)
@@ -32,15 +32,11 @@ Autres :
 	- Durant une attaque, pour chaque joueur (et l'attaquant), le joueur à 50% de chance d'être attaquer (avec le même jet) (Kamikaze)
 	- Impossible de contre-attaquer mon attaque, juste defendre (Kamikaze)
 	- Cible en priorité les morts-vivants (Prêtre)
-	- TODO Soin de 10% de MaximumLife au début de chaque tour (Prêtre)
+	- Soin de 10% de MaximumLife au début de chaque tour (Prêtre)
 
 - Vivant : Guerrier, Gardien, Berserker, Robot, Kamikaze, Prêtre
 - Mort-vivant : Zombie, Liche, Goule, Vampire
 
 TODO :
-- Formatter les commentaires de caratéristique spéciaux
-- Respecter les regles de nommage sur les accesseurs
-- Checkwinner en faire un paramètre
-- Formatter les percent
-- Formatter instanciation d'interface
-- Revoir les premières interfaces
+- Formatter nommage percent
+- Formatter nommage d'interface

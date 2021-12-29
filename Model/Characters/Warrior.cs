@@ -22,13 +22,16 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.totalAttackNumber = 2;
             this.characterCategory = Enum.CharacterCategory.Living;
         }
-        void IPainSensitive.CalculPainSensitive(int damagesSuffered, int remainingLife){
+        void IPainSensitive.CalculPainSensitive(int damagesSuffered){
             //Gestion de calcul de la douleur spécifique au guerrier
             //(Si ce trait de personnage devient plus commun il faudrait en faire une autre interface)
-            int percentLosingAttackAbility = (damagesSuffered - remainingLife) * 2 / (remainingLife + damagesSuffered);
-            if (Utils.random.Next(1, 101) < percentLosingAttackAbility)
+            if (damagesSuffered > this.currentLife)
             {
-                AttackCapability = 1;
+                int percentLosingAttackAbility = (damagesSuffered - currentLife) * 2 / (currentLife + damagesSuffered);
+                if (Utils.random.Next(1, 101) < percentLosingAttackAbility)
+                {
+                    AttackCapability = 0;
+                }
             }
         }
     }
