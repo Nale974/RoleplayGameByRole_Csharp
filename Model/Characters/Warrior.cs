@@ -20,6 +20,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.currentLife = 200;
             this.currentAttackNumber = 2;
             this.totalAttackNumber = 2;
+            this.characterCategory = Enum.CharacterCategory.Living;
         }
         void IPainSensitive.CalculPainSensitive(int damagesSuffered, int remainingLife){
             //Gestion de calcul de la douleur spécifique au guerrier

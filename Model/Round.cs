@@ -75,15 +75,34 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                     }
                                 }
                             }
-                            else
+                            else // Cas classique
                             {
-                                // Choisi un adversaire aléatoirement dans le reste de la liste
-                                int idDefender = i;
-                                while (idDefender == i || characters[idDefender].currentLife < 0)
+                                // Gestion de la caratéristique des attaques ciblés
+                                if (characters[i] is ITargetsPriorityCategory targetsPriorityCategory)
                                 {
-                                    idDefender = Utils.random.Next(0, characters.Count());
+                                    int idDefenderPriorityCategory;
+                                    List<Character> charactersAliveTargetsPriorityCategory = targetsPriorityCategory.CharactersAliveTargetsPriorityCategory(this.characters);
+                                    Console.WriteLine("charactersAliveTargetsPriorityCategory: ");
+                                    charactersAliveTargetsPriorityCategory.ForEach(c => Console.WriteLine(c.name));
+                                    if (charactersAliveTargetsPriorityCategory.Count() != 0)
+                                    {
+                                        idDefenderPriorityCategory = Utils.random.Next(0, charactersAliveTargetsPriorityCategory.Count());
+                                        defenders.Add(charactersAliveTargetsPriorityCategory[idDefenderPriorityCategory]);
+                                    }
                                 }
-                                defenders.Add(characters[idDefender]);
+
+                                if (defenders.Count() == 0)
+                                {
+                                    // Cas classique : choisi un adversaire aléatoirement dans le reste de la liste
+                                    int idDefender = i;
+                                    while (idDefender == i || characters[idDefender].currentLife < 0)
+                                    {
+                                        idDefender = Utils.random.Next(0, characters.Count());
+                                    }
+
+                                    defenders.Add(characters[idDefender]);
+                                }
+                                
                             }
 
                             // L'attaquant attaque les defenseurs
@@ -110,7 +129,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                         lifePointsWon =+ characterScavenger.LifePointsWon();
                                     }
                                     character.currentLife += lifePointsWon;
-                                    Console.WriteLine(character.name + " mange le(s) cadavre(s) ce qui lui permet de récupérer " + lifePointsWon + " points de vie");
+                                    if (lifePointsWon>0) { Console.WriteLine(character.name + " mange le(s) cadavre(s) ce qui lui permet de récupérer " + lifePointsWon + " points de vie"); }
                                 }
                             }
 

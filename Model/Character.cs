@@ -19,8 +19,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
         public int currentLife { get; set; }
         public int currentAttackNumber { get; set; }
         public int totalAttackNumber { get; set; }
-        public DamageFeature damageFeature { get; set; }
+        public CharacterCategory characterCategory { get; set; }
         public CharacterFeature characterFeature { get; set; }
+        public DamageFeature damageFeature { get; set; }
         public bool myPossibilityToCounterAttacksOfMyOpponent { get; set; }
         public bool thePossibilityThatMyOpponentsCounterMyAttack { get; set; }
         public bool multipleAttack { get; set; }
@@ -144,6 +145,8 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                             }
 
                             if (opponent.currentLife <= 0) { Console.WriteLine(tabulation + opponent.name + " est K.O."); }
+
+                            Console.WriteLine();
                         }
                         else //Si négatif
                         {
@@ -170,13 +173,11 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     }
                 }
                 else { Console.WriteLine(this.name + " ne touche personne !"); }
-                
             }
             else
             {
-                Console.WriteLine(tabulation + this.name + " n'a plus de point d'attaque de disponible.");
+                Console.WriteLine(tabulation + this.name + " n'a plus de point d'attaque de disponible.\n");
             }
-            Console.WriteLine();
         }
 
     }

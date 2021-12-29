@@ -19,6 +19,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.currentLife = 1000;
             this.currentAttackNumber = 1;
             this.totalAttackNumber = 1;
+            this.characterCategory = Enum.CharacterCategory.Undead;
             this.characterFeature = Enum.CharacterFeature.Cursed;
             this.myPossibilityToCounterAttacksOfMyOpponent = false;
         }

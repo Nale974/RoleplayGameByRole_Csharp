@@ -20,6 +20,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.currentLife = 500;
             this.currentAttackNumber = 6;
             this.totalAttackNumber = 6;
+            this.characterCategory = Enum.CharacterCategory.Living;
             this.myPossibilityToCounterAttacksOfMyOpponent = false;
             this.thePossibilityThatMyOpponentsCounterMyAttack = false;
             this.multipleAttack = true;

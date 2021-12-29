@@ -21,6 +21,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.currentLife = 150;
             this.currentAttackNumber = 3;
             this.totalAttackNumber = 3;
+            this.characterCategory = Enum.CharacterCategory.Living;
             this.damageFeature = Enum.DamageFeature.Holy;
         }
 

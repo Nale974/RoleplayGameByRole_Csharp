@@ -24,14 +24,15 @@ Autres :
 	- Bonus de contre-attaque doublé (Gardien)
 	- Ajout tous les points de vie perdu aux dégâts pour l'attaque (Berserker)
 	- TotalAttackNumber passe à 4 si sa vie est en dessous de 50% (Berserker)
+	- TODO Jet de défense toujours égal à 0 (Zombie)
 	- Peut pas contre-attaquer (Zombie, Kamikaze)
 	- Jet avec valeur fixe de 50 (Robot)
 	- Augmente attaque de 50% à chaque tour (Robot)
 	- Soigne de la moitié des dégâts qu’il inflige pendant le tour (Vampire)
 	- Durant une attaque, pour chaque joueur (et l'attaquant), le joueur à 50% de chance d'être attaquer (avec le même jet) (Kamikaze)
 	- Impossible de contre-attaquer mon attaque, juste defendre (Kamikaze)
-	- Cible en priorité mort-vivant (Prêtre)
-	- Soin de 10% de MaximumLife au début de chaque tour (Prêtre)
+	- TODO Cible en priorité les morts-vivants (Prêtre)
+	- TODO Soin de 10% de MaximumLife au début de chaque tour (Prêtre)
 
 - Vivant : Guerrier, Gardien, Berserker, Robot, Kamikaze, Prêtre
 - Mort-vivant : Zombie, Liche, Goule, Vampire
