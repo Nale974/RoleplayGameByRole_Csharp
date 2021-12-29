@@ -40,7 +40,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         protected int GenerateNumberForJet()
         {
-            //Gestion de jet spécifique
+            // Gestion de la caractéristique de jet spécifique
             if (this is ISpecificNumberForJet IspecificNumberForJet)
             {
                 return IspecificNumberForJet.SpecificNumberForJet;
@@ -55,7 +55,12 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         public int CalculJetDefense()
         {
-            return this.defense + GenerateNumberForJet();
+            // Gestion de la caractéristique de jet de défense spécifique
+            if (this is ISpecificNumberForJetDefense specificNumberForJetDefense)
+            {
+                return this.defense + specificNumberForJetDefense.SpecificNumberForJetDefense;
+            }
+            else{ return this.defense + GenerateNumberForJet(); }
         }
 
         public int CalculJetInitiative()

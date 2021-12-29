@@ -31,7 +31,7 @@ Autres :
 	- Soigne de la moitié des dégâts qu’il inflige pendant le tour (Vampire)
 	- Durant une attaque, pour chaque joueur (et l'attaquant), le joueur à 50% de chance d'être attaquer (avec le même jet) (Kamikaze)
 	- Impossible de contre-attaquer mon attaque, juste defendre (Kamikaze)
-	- TODO Cible en priorité les morts-vivants (Prêtre)
+	- Cible en priorité les morts-vivants (Prêtre)
 	- TODO Soin de 10% de MaximumLife au début de chaque tour (Prêtre)
 
 - Vivant : Guerrier, Gardien, Berserker, Robot, Kamikaze, Prêtre

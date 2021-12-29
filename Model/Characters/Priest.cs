@@ -6,10 +6,11 @@ using System.Text;
 
 namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
-    class Priest : Character, IPainSensitive, ITargetsPriorityCategory
+    class Priest : Character, IPainSensitive, ITargetsPriorityCategory, IRecurrentCare
     {
         public int AttackCapability { get; set; } = -1;
         public CharacterCategory targetsPriorityCategory { get; set; }
+        public double recurrentCarePercent { get; set; }
         public Priest(string name) : base(name)
         {
             this.type = "Prêtre";
@@ -26,6 +27,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.damageFeature = Enum.DamageFeature.Holy;
             this.characterFeature = Enum.CharacterFeature.Blessed;
             this.targetsPriorityCategory = CharacterCategory.Undead;
+            this.recurrentCarePercent = 0.10;
         }
     }
 }

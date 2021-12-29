@@ -19,16 +19,34 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
         public void Run()
         {
-            //Rétablissement des niveaux d'attaque par défaut
+            // Rétablissement des niveaux d'attaque par défaut
             characters.ForEach(c => c.currentAttackNumber = c.totalAttackNumber);
 
-            //Suivi nombre d'attaque
+            // Suivi nombre d'attaque
             Console.WriteLine("DEBUG - Nombre d'attaque : ");
             characters.ForEach(c => Console.WriteLine("     " + c.name + " : " + c.currentAttackNumber));
             Console.WriteLine("");
 
-            //Calcul d'initiative
+            // Calcul d'initiative
             this.characters = CalculInitiative(characters);
+
+            // Gestion des caratéristiques de début de tour
+            foreach (Character character in characters)
+            {
+                // Gestion de la caratéristique d'augmentation de l'attaque à chaque tour
+                if (character.currentLife > 0 && character is IIncreasedAttack CharacterIncreasedAttack)
+                {
+                    CharacterIncreasedAttack.attack += (int)(CharacterIncreasedAttack.attack * CharacterIncreasedAttack.IncreasedAttack);
+                    Console.WriteLine("L'attaque de " + character.name + " augmente de " + CharacterIncreasedAttack.IncreasedAttack * 100 + "%, il est maintenant de " + CharacterIncreasedAttack.attack + ".");
+                }
+
+                // Gestion de la caratéristique de soins récurrent
+                if (character.currentLife > 0 && character is IRecurrentCare characterRecurrentCare)
+                {
+                    characterRecurrentCare.Care();
+                    Console.WriteLine(character.name + " regagne " + characterRecurrentCare.recurrentCarePercent * 100 + "% de sa vie, il a maintenant " + character.currentLife + " pdv.");
+                }
+            }
 
             //Pour chaque personnage du round
             for (int i = 0; i < characters.Count(); i++)
@@ -41,13 +59,6 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     Console.WriteLine("\nC'est au tour de " + characters[i].name + ".");
                     Console.ResetColor();
                     Console.Write("\n");
-
-                    // Gestion de la caratéristique d'augmentation de l'attaque à chaque tour
-                    if (characters[i] is IIncreasedAttack CharacterIncreasedAttack)
-                    {
-                        CharacterIncreasedAttack.attack = CharacterIncreasedAttack.attack + (int)(CharacterIncreasedAttack.attack * CharacterIncreasedAttack.IncreasedAttack);
-                        Console.WriteLine("L'attaque de "+ characters[i].name+" augmente de "+ CharacterIncreasedAttack.IncreasedAttack*100+ "%, il est maintenant de "+ CharacterIncreasedAttack.attack+".");
-                    }
 
                     // Gestion de la caratéristique de la douleur : 
                     // Si le personnage est victime de la douleur
