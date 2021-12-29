@@ -7,7 +7,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
     class Goule : Character, IScavenger
     {
-        public Goule(string name)
+        public Goule(string name) : base(name)
         {
             this.type = "Goule";
             this.name = name + "[" + this.type + "]";

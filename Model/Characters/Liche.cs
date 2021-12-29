@@ -6,7 +6,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
     class Liche : Character
     {
-        public Liche(string name)
+        public Liche(string name) : base(name)
         {
             this.type = "Liche";
             this.name = name + "[" + this.type + "]";

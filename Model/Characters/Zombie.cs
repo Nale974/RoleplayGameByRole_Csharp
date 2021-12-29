@@ -7,7 +7,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
 {
     class Zombie : Character, IScavenger
     {
-        public Zombie(string name)
+        public Zombie(string name) : base(name)
         {
             this.type = "Zombie";
             this.name = name + "[" + this.type + "]";

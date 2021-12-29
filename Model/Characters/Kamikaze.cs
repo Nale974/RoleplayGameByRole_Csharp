@@ -8,7 +8,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
     class Kamikaze : Character, IPainSensitive
     {
         public int AttackCapability { get; set; } = -1;
-        public Kamikaze(string name)
+        public Kamikaze(string name) : base(name)
         {
             this.type = "Kamikaze";
             this.name = name + "[" + this.type + "]";
@@ -22,6 +22,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
             this.totalAttackNumber = 6;
             this.myPossibilityToCounterAttacksOfMyOpponent = false;
             this.thePossibilityThatMyOpponentsCounterMyAttack = false;
+            this.multipleAttack = true;
         }
     }
 }

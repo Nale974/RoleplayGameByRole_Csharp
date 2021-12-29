@@ -10,7 +10,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
         public int DamageInflicted { get; set; }
         public double CareAccordingPercent { get; set; }
 
-        public Vampire(string name)
+        public Vampire(string name) : base(name)
         {
             this.type = "Vampire";
             this.name = name + "[" + this.type + "]";

@@ -11,7 +11,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
         public int SpecificNumberForJet { get; set; } = 50;
         public double IncreasedAttack { get; set; } = 0.5;
 
-        public Robot(string name)
+        public Robot(string name) : base(name)
         {
             this.type = "Robot";
             this.name = name + "[" + this.type + "]";

@@ -8,7 +8,7 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model.Characters
     class Warrior : Character, IPainSensitive
     {
         public int AttackCapability { get; set; } = -1;
-        public Warrior(string name)
+        public Warrior(string name) : base(name)
         {
             this.type = "Guerrier";
             this.name = name + "[" + this.type + "]";

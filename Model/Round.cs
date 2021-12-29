@@ -58,34 +58,62 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                     }
                     else
                     {
-                        // Jusqu'a que le personnage n'a plus d'attaque de disponible
+                        if (characters[i].currentAttackNumber == 0) { Console.WriteLine(characters[i].name+" n'a plus d'attaque disponible."); }
+                        // Jusqu'a que le personnage n'a plus d'attaque disponible
                         while (characters[i].currentAttackNumber > 0)
                         {
-                            // Choisi un adversaire aléatoirement dans le reste de la liste
-                            int idDefender = i;
-                            while (idDefender == i)
-                            {
-                                idDefender = Utils.random.Next(0, characters.Count());
-                            }
+                            List<Character> defenders = new List<Character>();
 
-                            // L'attaquant attaque le defenseur
-                            characters[i].Attack(characters[idDefender]);
-
-                            // Gestion de la caratéristique charognard :
-                            // Si l'un des personnages est mort pendant l'attaque 
-                            if (characters[i].currentLife <= 0 || characters[idDefender].currentLife <= 0)
+                            // Gestion de la caratéristique des attaques multiples
+                            if (characters[i].multipleAttack == true)
                             {
-                                foreach (var character in characters)
+                                foreach (Character character in characters)
                                 {
-                                    if (character.currentLife > 0 && character is IScavenger characterScavenger)
+                                    if (character.currentLife > 0 && Utils.random.Next(0, 100) < 50)
                                     {
-                                        int lifePointsWon = characterScavenger.LifePointsWon();
-                                        character.currentLife += lifePointsWon;
-                                        Console.WriteLine(character.name+ " mange le cadavre ce qui lui permet de récupérer "+ lifePointsWon + " points de vie");
+                                        defenders.Add(character);
                                     }
                                 }
                             }
-                            
+                            else
+                            {
+                                // Choisi un adversaire aléatoirement dans le reste de la liste
+                                int idDefender = i;
+                                while (idDefender == i || characters[idDefender].currentLife < 0)
+                                {
+                                    idDefender = Utils.random.Next(0, characters.Count());
+                                }
+                                defenders.Add(characters[idDefender]);
+                            }
+
+                            // L'attaquant attaque les defenseurs
+                            characters[i].Attack(defenders);
+
+                            // Gestion de la caractéristique du charognard :
+                            // Si l'un ou plusieurs des personnages est mort pendant l'attaque
+                            int deaths = 0;
+                            if (characters[i].currentLife <= 0){ deaths++; }
+                            foreach (Character defender in defenders)
+                            {
+                                if (defender != characters[i] && defender.currentLife <= 0)
+                                {
+                                    deaths++;
+                                }
+                            }
+                            foreach (Character character in characters)
+                            {
+                                if (character.currentLife > 0 && character is IScavenger characterScavenger)
+                                {
+                                    int lifePointsWon=0;
+                                    for (int j = 0; j < deaths; j++)
+                                    {
+                                        lifePointsWon =+ characterScavenger.LifePointsWon();
+                                    }
+                                    character.currentLife += lifePointsWon;
+                                    Console.WriteLine(character.name + " mange le(s) cadavre(s) ce qui lui permet de récupérer " + lifePointsWon + " points de vie");
+                                }
+                            }
+
                             // Si il y a un gagnant, on arrête le tour
                             if (this.CheckWinner() == true){break;}
                         }
