@@ -41,9 +41,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
         protected int GenerateNumberForJet()
         {
             // Gestion de la particularité de jet spécifique
-            if (this is ISpecificNumberForJet IspecificNumberForJet)
+            if (this is ISpecificNumberForJet characterSpecificNumberForJet)
             {
-                return IspecificNumberForJet.SpecificNumberForJet;
+                return characterSpecificNumberForJet.SpecificNumberForJet;
             }
             else { return Utils.random.Next(0, 100); }
         }
@@ -56,9 +56,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
         public int CalculJetDefense()
         {
             // Gestion de la particularité de jet de défense spécifique
-            if (this is ISpecificNumberForJetDefense specificNumberForJetDefense)
+            if (this is ISpecificNumberForJetDefense characterSpecificNumberForJetDefense)
             {
-                return this.defense + specificNumberForJetDefense.SpecificNumberForJetDefense;
+                return this.defense + characterSpecificNumberForJetDefense.SpecificNumberForJetDefense;
             }
             else{ return this.defense + GenerateNumberForJet(); }
         }
@@ -115,9 +115,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
 
                                 // Gestion de la particularité d'ajouter les points de vie perdu aux dégâts
                                 int lifelost = 0;
-                                if (this is IAllLifeLostForDamage thisCharacterAllLifeLostForDamage)
+                                if (this is IAllLifeLostForDamage characterAllLifeLostForDamage)
                                 {
-                                    lifelost = thisCharacterAllLifeLostForDamage.CalculLifeLost();
+                                    lifelost = characterAllLifeLostForDamage.CalculLifeLost();
                                     Console.WriteLine(tabulation + this.name + " ajoute ses " + lifelost + " points de vie perdu à ses dégats.");
                                 }
 
@@ -129,9 +129,9 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                 Console.WriteLine(tabulation + this.name + " réussi son attaque, " + opponent.name + " perd " + damagesSuffered + " point de vie.");
 
                                 // Gestion de la particularité de la récupération de vie selon les dégats infligés
-                                if (this is ICareAccordingToDamageInflicted iCareAccordingToDamageInflicted)
+                                if (this is ICareAccordingToDamageInflicted characterCareAccordingToDamageInflicted)
                                 {
-                                    int recoveredLife = (int)(damagesSuffered * iCareAccordingToDamageInflicted.CareAccordingPercent);
+                                    int recoveredLife = (int)(damagesSuffered * characterCareAccordingToDamageInflicted.CareAccordingPercent);
                                     Console.WriteLine(tabulation + this.name + " récupére " + recoveredLife + " de point de vie en attaquant.");
                                     this.currentLife += recoveredLife;
                                 }
@@ -148,13 +148,13 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                 }
 
                                 // Gestion de la particularité de l'augmentation du "TotalAttackNumber" de l'adversaire
-                                if (opponent is IIncreasedTotalAttackNumber opponentITAN)
+                                if (opponent is IIncreasedTotalAttackNumber characterIncreasedTotalAttackNumber)
                                 {
                                     //Console.WriteLine(tabulation + "DEBUG - " + opponent.currentLife + " < " + opponentITAN.totalAttackNumberLimit * opponent.currentLife);
-                                    if (opponent.currentLife < opponentITAN.totalAttackNumberLimit * opponent.currentLife)
+                                    if (opponent.currentLife < characterIncreasedTotalAttackNumber.totalAttackNumberLimit * opponent.currentLife)
                                     {
-                                        Console.WriteLine("Les points de vie de " + opponent.name + " descendent en dessous des " + opponentITAN.totalAttackNumberLimit * 100 + "%. Son nombre d'attaque total passe alors de " + opponentITAN.totalAttackNumber + " à " + opponentITAN.totalAttackNumberIncrease + " !");
-                                        opponentITAN.totalAttackNumber = opponentITAN.totalAttackNumberIncrease;
+                                        Console.WriteLine("Les points de vie de " + opponent.name + " descendent en dessous des " + characterIncreasedTotalAttackNumber.totalAttackNumberLimit * 100 + "%. Son nombre d'attaque total passe alors de " + characterIncreasedTotalAttackNumber.totalAttackNumber + " à " + characterIncreasedTotalAttackNumber.totalAttackNumberIncrease + " !");
+                                        characterIncreasedTotalAttackNumber.totalAttackNumber = characterIncreasedTotalAttackNumber.totalAttackNumberIncrease;
                                     }
                                 }
 
@@ -179,10 +179,10 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                                     numberCounterAttack++;
 
                                     // Gestion de la particularité des bonus de contre-attaque
-                                    if (opponent is ICounterAttackBonus opponentCounterAttackBonus)
+                                    if (opponent is ICounterAttackBonus characterCounterAttackBonus)
                                     {
-                                        Console.WriteLine(tabulation + opponent.name + " à un bonus de contre-attaque de " + opponentCounterAttackBonus.CounterAttackBonus + " !");
-                                        opponent.Attack(new List<Character> { this }, (attackMargin * opponentCounterAttackBonus.CounterAttackBonus), numberCounterAttack);
+                                        Console.WriteLine(tabulation + opponent.name + " à un bonus de contre-attaque de " + characterCounterAttackBonus.CounterAttackBonus + " !");
+                                        opponent.Attack(new List<Character> { this }, (attackMargin * characterCounterAttackBonus.CounterAttackBonus), numberCounterAttack);
                                     }
                                     else { opponent.Attack(new List<Character> { this }, attackMargin, numberCounterAttack); }
                                 }

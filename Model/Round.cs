@@ -35,10 +35,10 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
             foreach (Character character in characters)
             {
                 // Gestion de la particularité d'augmentation de l'attaque à chaque tour
-                if (character.currentLife > 0 && character is IIncreasedAttack CharacterIncreasedAttack)
+                if (character.currentLife > 0 && character is IIncreasedAttack characterIncreasedAttack)
                 {
-                    CharacterIncreasedAttack.attack += (int)(CharacterIncreasedAttack.attack * CharacterIncreasedAttack.IncreasedAttack);
-                    Console.WriteLine("L'attaque de " + character.name + " augmente de " + CharacterIncreasedAttack.IncreasedAttack * 100 + "%, il est maintenant de " + CharacterIncreasedAttack.attack + ".");
+                    characterIncreasedAttack.attack += (int)(characterIncreasedAttack.attack * characterIncreasedAttack.IncreasedAttack);
+                    Console.WriteLine("L'attaque de " + character.name + " augmente de " + characterIncreasedAttack.IncreasedAttack * 100 + "%, il est maintenant de " + characterIncreasedAttack.attack + ".");
                 }
 
                 // Gestion de la particularité de soins récurrent
@@ -92,10 +92,10 @@ namespace LEBON_Nathan_DM_IPI_2021_2022.Model
                             else // Cas classique
                             {
                                 // Gestion de la particularité des attaques ciblés
-                                if (characters[i] is ITargetsPriorityCategory targetsPriorityCategory)
+                                if (characters[i] is ITargetsPriorityCategory characterTargetsPriorityCategory)
                                 {
                                     int idDefenderPriorityCategory;
-                                    List<Character> charactersAliveTargetsPriorityCategory = targetsPriorityCategory.CharactersAliveTargetsPriorityCategory(this.characters);
+                                    List<Character> charactersAliveTargetsPriorityCategory = characterTargetsPriorityCategory.CharactersAliveTargetsPriorityCategory(this.characters);
                                     if (charactersAliveTargetsPriorityCategory.Count() != 0)
                                     {
                                         idDefenderPriorityCategory = Utils.random.Next(0, charactersAliveTargetsPriorityCategory.Count());

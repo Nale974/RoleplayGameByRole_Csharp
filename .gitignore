@@ -1,0 +1,10 @@
+# Fichiers de publication
+LEBON_Nathan_DM_IPI_2021_2022.csproj.user
+Properties/
+bin/Release/netcoreapp3.1/LEBON_Nathan_DM_IPI_2021_2022.application
+bin/Release/netcoreapp3.1/LEBON_Nathan_DM_IPI_2021_2022.dll.manifest
+obj/Release/netcoreapp3.1/LEBON_Nathan_DM_IPI_2021_2022.application
+obj/Release/netcoreapp3.1/LEBON_Nathan_DM_IPI_2021_2022.dll.manifest
+obj/Release/netcoreapp3.1/Launcher.exe
+obj/Release/netcoreapp3.1/PublishOutputs.29d8b88669.txt
+obj/Release/netcoreapp3.1/PublishOutputs.a99f1b4527.txt
